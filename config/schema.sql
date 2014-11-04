@@ -13,7 +13,10 @@ CREATE TABLE carsapp_development.users(
   CONSTRAINT users_pk PRIMARY KEY (id)
 );
 ALTER TABLE carsapp_development.users ADD role VARCHAR(20) NOT NULL;
+ALTER TABLE carsapp_development.users ADD password VARCHAR(20) NOT NULL;
 
+INSERT INTO carsapp_development.users (id,email,first_name,last_name,role,password)
+   VALUES (1,'admin@admin','super','admin','super','superadmin');
 
 drop table if exists carsapp_development.cities; -- Ciudad
 create table carsapp_development.cities(
@@ -25,7 +28,7 @@ create table carsapp_development.cities(
 
 DROP TABLE IF EXISTS carsapp_development.vehicles;  -- Vehiculos
 CREATE TABLE carsapp_development.vehicles(
-    patent VARCHAR (11) not null, 
+    patent VARCHAR (11) UNIQUE, 
     kind VARCHAR(11) not null,
     mark  VARCHAR(11) not null,
     user_id VARCHAR(60) not null references users(email),
@@ -106,19 +109,20 @@ CREATE TABLE carsapp_test.users(
   CONSTRAINT users_pk PRIMARY KEY (id)
 );
 ALTER TABLE carsapp_test.users ADD role VARCHAR(20) NOT NULL; 
+ALTER TABLE carsapp_test.users ADD password VARCHAR(20) NOT NULL;
 
 -- CREO LA BASE DE DATOS DE LAS CIUDADES QUE POSEEN EL VEHICULO 
 drop table if exists carsapp_test.cities;
 create table carsapp_test.cities(
     id int(11) not null auto_increment,
-    postal_code int(11) not null,   
+    postal_code int(11) UNIQUE,   
     name varchar(60) not null,
     constraint pk_city primary key (id)
 );
 
 DROP TABLE IF EXISTS carsapp_test.vehicles;     -- Vehiculos
 CREATE TABLE carsapp_test.vehicles(
-    patent VARCHAR (11) not null, 
+    patent VARCHAR (11) UNIQUE, 
     kind VARCHAR(11) not null,
     mark  VARCHAR(11) not null,
     user_id VARCHAR(60) not null references users(email),
